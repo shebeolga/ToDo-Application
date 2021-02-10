@@ -44,8 +44,7 @@
               <input class="input" type="password" name="password" id="passwprd">
               <div class="button-group">
                 <input class="button" type="submit" name="signUp" value="Sign In">
-                <!-- <input class="button" type="button" name="cancel" value="Cancel" action="{{ url_for('index') }}"> -->
-                <button class="button" name="cancel" id="cancel" onclick="{{ url_for('index') }}">
+                <button class="button" type="button" name="cancel" id="cancel" onclick="window.history.back();">
                   Cancel
                 </button>
               </div>
