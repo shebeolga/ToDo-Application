@@ -1,0 +1,149 @@
+@font-face {
+  font-family: "Roboto";
+  src: local("Roboto Regular"), url("roboto.woff") format("woff");
+}
+
+html,
+body {
+  margin: 0;
+  font-size: 15px;
+  font-family: "Arial", sans-serif;
+  height: 100%;
+}
+
+body {
+  background-color: #f6f6f6;
+}
+
+.layout-positioner {
+  width: 75%;
+  margin: 0 auto;
+}
+
+.layout-positioner::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+header {
+  background-color: #8bcdcd;
+  height: 10%;
+}
+
+nav {
+  display: flex;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.logo {
+  margin-right: 20px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.menu-actions {
+  margin-right: auto;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.menu-log {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.menu-item {
+  display: block;
+  /* background: #3797A4; */
+  color: black;
+  font-size: 18px;
+  text-decoration: none;
+  margin-right: 20px;
+  margin-top: 5px;
+  padding: 5px;
+  /* border: 1px solid; */
+  /* border-radius: 10px; */
+}
+
+.menu-item:hover {
+  background: #3797a4;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.active-button {
+  background: #3797a4;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+main {
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 50px;
+  height: auto;
+  padding: 20px;
+}
+
+.content-form {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sign-form {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border: 5px solid #8bcdcd;
+  border-radius: 10px;
+}
+
+.label {
+  margin: 5px;
+  margin-bottom: 0;
+}
+
+.input {
+  margin: 10px;
+  margin-top: 0;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  background: #3797a4;
+  color: black;
+  font-size: 15px;
+  text-decoration: none;
+  margin: 5px;
+  padding: 5px 10px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+footer {
+  background-color: #8bcdcd;
+  padding: 20px;
+  height: 10%;
+}
+
+.copyright {
+  text-align: right;
+}

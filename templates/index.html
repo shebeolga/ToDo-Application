@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>My Way</title>
+    <link rel="shortcut icon" href="static\img\double-tick.png" type="image/x-icon">
+    <link rel="stylesheet" href="static\style.css">
+  </head>
+  <body>
+    <header>
+      <div class="layout-positioner">
+        <nav>
+          <div class="logo">
+            <a href="#"><img src="static\img\double-tick.png" alt="Logo"></a>
+          </div>
+          <div class="menu-actions">
+            <a class="menu-item" href="{{ url_for('index') }}">My ToDo App</a>
+            {% if user %}
+            <a class="menu-item" href="#">Active</a>
+            <a class="menu-item" href="#">Archive</a>
+            <a class="menu-item" href="#">Reports</a>
+            {% endif %}
+          </div>
+          <div class="menu-log">
+            {% if not user %}
+            <a class="menu-item" href="{{ url_for('signup') }}">Sign Up</a>
+            <a class="menu-item" href="{{ url_for('signin') }}">Sign In</a>
+            {% endif %}
+            {% if user %}
+            <a class="menu-item" href="{{ url_for('signout') }}">Sign Out</a>
+            {% endif %}
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="layout-positioner">
+        <div class="content">
+          <div class="text">
+            <p>This ToDo application is designed to make you more productive
+              by better managing your time.This is based on the technique
+              followed by the legendary General and former president of
+              the United States Dwight D. Eisenhower. The method was made
+              popular by Stephen Covey in his popular title “The 7 Habits
+              of Highly Effective People”.</p>
+
+            <p>How to use tasks effectively?</p>
+            <p>Eisenhower’s strategy for taking action and organizing your
+              tasks is simple. Using the decision matrix below, you will
+              separate your actions based on four possibilities.</p>
+            <ul>
+              <li>Urgent and important (tasks you will do immediately).
+              <li>Important, but not urgent (tasks you will schedule to do later).
+              <li>Urgent, but not important (tasks you will delegate to someone else).
+              <li>Neither urgent nor important (tasks that you will eliminate).
+            </ul>
+
+            <p>The great thing about this matrix is that it can be used for
+              broad productivity plans (“How should I spend my time each week?”)
+              and for smaller, daily plans (“What should I do today?”)</p>
+          </div>
+          <div class="picture">
+            <img src="static\img\main_picture.png" alt="Picture" height="80%" width="100%">
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="layout-positioner">
+        <div class="copyright">
+          © Olga Shebeko, 2021
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

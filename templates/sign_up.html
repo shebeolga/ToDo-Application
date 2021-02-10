@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Sign up</title>
+    <link rel="shortcut icon" href="static\img\double-tick.png" type="image/x-icon">
+    <link rel="stylesheet" href="static\style.css">
+  </head>
+  <body>
+    <header>
+      <div class="layout-positioner">
+        <nav>
+          <div class="logo">
+            <a href="#"><img src="static\img\double-tick.png" alt="Logo"></a>
+          </div>
+          <div class="menu-actions">
+            <a class="menu-item" href="{{ url_for('index') }}">My ToDo App</a>
+            {% if user %}
+            <a class="menu-item" href="#">Active</a>
+            <a class="menu-item" href="#">Archive</a>
+            <a class="menu-item" href="#">Reports</a>
+            {% endif %}
+          </div>
+          <div class="menu-log">
+            {% if not user %}
+            <a class="menu-item active-button" href="{{ url_for('signup') }}">Sign Up</a>
+            <a class="menu-item" href="{{ url_for('signin') }}">Sign In</a>
+            {% endif %}
+            {% if user %}
+            <a class="menu-item" href="{{ url_for('signout') }}">Sign Out</a>
+            {% endif %}
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+        <div class="layout-positioner">
+          <div class="content-form">
+            <form class="sign-form" method="POST" action="{{ url_for('signup') }}">
+              <label class="label" for="name">Name</label>
+              <input class="input" type="text" name="name" id="name" autofocus>
+              <label class="label" for="email">E-mail</label>
+              <input class="input" type="email" name="email" id="email">
+              <label class="label" for="password">Password</label>
+              <input class="input" type="password" name="password" id="passwprd">
+              <label class="label" for="repeatPassword">Repeat password</label>
+              <input class="input" type="password" name="repeat-password" id="repeat-password" >
+              <div class="button-group">
+                <input class="button" type="submit" name="signUp" value="Sign up">
+                <input class="button" type="submit" name="cancel" value="Cancel">
+              </div>
+            </form>
+          </div>
+        </div>
+    </main>
+
+    <footer>
+      <div class="layout-positioner">
+        <div class="copyright">
+          © Olga Shebeko, 2021
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
