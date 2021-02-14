@@ -145,6 +145,11 @@ def new_task():
         user.tasks.append(new_task)
         db_session.commit()
 
+        if comment.strip():
+            new_comment = Comment(comment=comment)
+            new_task.comments.append(new_comment)
+            db_session.commit()
+
         return "<h1>You add new task " + task + " with comment " + comment + ". Urgent: " + str(urgent) + ". Important: " + str(important) + "</h1>"
 
     return render_template("new_task.html", user=user)
