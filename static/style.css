@@ -1,3 +1,9 @@
+:root {
+  --dark: #3797a4;
+  --medium: #8bcdcd;
+  --main-background: #f6f6f6;
+}
+
 @font-face {
   font-family: "Roboto";
   src: local("Roboto Regular"), url("roboto.woff") format("woff");
@@ -12,7 +18,7 @@ body {
 }
 
 body {
-  background-color: #f6f6f6;
+  background-color: var(--main-background);
 }
 
 .layout-positioner {
@@ -27,7 +33,7 @@ body {
 }
 
 header {
-  background-color: #8bcdcd;
+  background-color: var(--medium);
   height: 10%;
 }
 
@@ -65,14 +71,14 @@ nav {
 }
 
 .menu-item:hover {
-  background: #3797a4;
-  border: 1px solid;
+  background: var(--dark);
+  border: 1px solid var(--dark);
   border-radius: 10px;
 }
 
 .active-button {
-  background: #3797a4;
-  border: 1px solid;
+  background: var(--dark);
+  border: 1px solid var(--dark);
   border-radius: 10px;
 }
 
@@ -103,7 +109,7 @@ main {
 
 .form {
   padding: 20px;
-  border: 5px solid #8bcdcd;
+  border: 5px solid var(--medium);
   border-radius: 10px;
 }
 
@@ -131,10 +137,23 @@ main {
   justify-content: flex-start;
 }
 
-.error {
-  color: green;
-  font-size: 1.5rem;
-  margin-bottom: 30px;
+.matrix {
+  display: grid;
+  grid-template-rows: 1fr 5fr 5fr;
+  min-height: 80%;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 4fr 4fr;
+}
+
+.fieldset {
+  border: 2px solid var(--dark);
+  border-radius: 10px;
+  background-color: var(--medium);
+  opacity: 0.3;
+  margin: 5px;
 }
 
 .label {
@@ -147,20 +166,48 @@ main {
   margin-top: 0;
 }
 
+.horizon-text {
+  text-align: center;
+  margin: auto;
+  padding: auto;
+  font-size: 17px;
+  color: var(--dark);
+}
+
+.vertical-text {
+  transform: rotate(270deg);
+  transform-origin: top bottom;
+  margin: auto;
+  color: var(--dark);
+  font-size: 17px;
+}
+
+.error {
+  color: red;
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+}
+
 .button-group {
   display: flex;
   justify-content: space-between;
 }
 
 .button {
-  background: #3797a4;
+  background: var(--dark);
   color: black;
   font-size: 15px;
   text-decoration: none;
   margin: 5px;
   padding: 5px 10px;
-  border: 1px solid;
+  border: 1px solid var(--dark);
   border-radius: 10px;
+}
+
+.add-button {
+  margin: auto;
+  padding: 10px;
+  font-size: 15px;
 }
 
 .checkboxes {
@@ -173,7 +220,7 @@ main {
 }
 
 footer {
-  background-color: #8bcdcd;
+  background-color: var(--medium);
   padding: 20px;
   height: 10%;
 }
