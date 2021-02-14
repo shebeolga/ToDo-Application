@@ -37,7 +37,7 @@
     <main>
         <div class="layout-positioner">
           <div class="content-form">
-            <form class="sign-form" method="POST" action="{{ url_for('signin') }}">
+            <form class="form sign-form" method="POST" action="{{ url_for('signin') }}">
               {% if error %}
               <div class="error">{{ error }}</div>
               {% endif %}
@@ -46,7 +46,7 @@
               <label class="label" for="password">Password</label>
               <input class="input" type="password" name="password" id="passwprd">
               <div class="button-group">
-                <input class="button" type="submit" name="signUp" value="Sign In">
+                <input class="button" type="submit" name="signIn" value="Sign In">
                 <input class="button" type="button" name="cancel" id="cancel" value="Cancel" onclick="Cancel();">
               </div>
             </form>

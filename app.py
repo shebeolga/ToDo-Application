@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
+from validate_email import validate_email
 import logging
 import os
 from database import *
@@ -62,6 +63,11 @@ def signup():
     if request.method == "POST":
         name = request.form["name"]
         email = request.form["email"]
+
+        if not validate_email(email):
+            error = "Your email is not valid"
+            return render_template('sign_up.html', error=error)
+
         hashed_password = generate_password_hash(
             request.form["password"], method="sha256"
         )
@@ -82,7 +88,7 @@ def signup():
 
         session["user"] = str(new_user.user_id)
 
-        return "name: " + name + ", email: " + email + ", password: " + hashed_password
+        return render_template("index.html", user=user)
 
     return render_template("sign_up.html", user=user)
 
@@ -105,7 +111,7 @@ def signin():
                 error = "The password is incorrect!"
                 return render_template('sign_in.html', error=error)
         else:
-            error = "There is no such use. You have to register!"
+            error = "There is no such user. You have to register!"
             return render_template('sign_in.html', error=error)
 
     return render_template("sign_in.html", user=user)
@@ -117,6 +123,10 @@ def signout():
     session.clear()
     return redirect(url_for("index"))
 
+
+@app.route("/new_task")
+def new_task():
+    return render_template("new_task.html")
 
 if __name__ == "__main__":
     app.run()

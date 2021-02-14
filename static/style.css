@@ -56,15 +56,12 @@ nav {
 
 .menu-item {
   display: block;
-  /* background: #3797A4; */
   color: black;
   font-size: 18px;
   text-decoration: none;
   margin-right: 20px;
   margin-top: 5px;
   padding: 5px;
-  /* border: 1px solid; */
-  /* border-radius: 10px; */
 }
 
 .menu-item:hover {
@@ -104,12 +101,34 @@ main {
   margin-right: auto;
 }
 
+.form {
+  padding: 20px;
+  border: 5px solid #8bcdcd;
+  border-radius: 10px;
+}
+
 .sign-form {
   display: flex;
   flex-direction: column;
-  padding: 30px;
-  border: 5px solid #8bcdcd;
-  border-radius: 10px;
+}
+
+.task-form {
+  width: 50%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.main-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-right: 30px;
+}
+
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .error {
@@ -142,6 +161,15 @@ main {
   padding: 5px 10px;
   border: 1px solid;
   border-radius: 10px;
+}
+
+.checkboxes {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.checkbox {
+  padding-right: 20px;
 }
 
 footer {
