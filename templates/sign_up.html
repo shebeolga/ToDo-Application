@@ -38,6 +38,9 @@
         <div class="layout-positioner">
           <div class="content-form">
             <form class="sign-form" method="POST" action="{{ url_for('signup') }}">
+              {% if error %}
+              <div class="error">{{ error }}</div>
+              {% endif %}
               <label class="label" for="name">Name</label>
               <input class="input" type="text" name="name" id="name" autofocus>
               <label class="label" for="email">E-mail</label>
@@ -48,9 +51,7 @@
               <input class="input" type="password" name="repeat-password" id="repeat-password" >
               <div class="button-group">
                 <input class="button" type="submit" name="signUp" value="Sign up">
-                <button class="button" type="button" name="cancel" id="cancel" onclick="window.history.back();">
-                  Cancel
-                </button>
+                <input class="button" type="button" name="cancel" id="cancel" value="Cancel" onclick="Cancel();">
               </div>
             </form>
           </div>
@@ -66,3 +67,9 @@
     </footer>
   </body>
 </html>
+
+<script type="text/javascript">
+  function Cancel() {
+    window.location.href = "/";
+  }
+</script>

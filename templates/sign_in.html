@@ -38,15 +38,16 @@
         <div class="layout-positioner">
           <div class="content-form">
             <form class="sign-form" method="POST" action="{{ url_for('signin') }}">
+              {% if error %}
+              <div class="error">{{ error }}</div>
+              {% endif %}
               <label class="label" for="email">E-mail</label>
               <input class="input" type="email" name="email" id="email" autofocus>
               <label class="label" for="password">Password</label>
               <input class="input" type="password" name="password" id="passwprd">
               <div class="button-group">
                 <input class="button" type="submit" name="signUp" value="Sign In">
-                <button class="button" type="button" name="cancel" id="cancel" onclick="window.history.back();">
-                  Cancel
-                </button>
+                <input class="button" type="button" name="cancel" id="cancel" value="Cancel" onclick="Cancel();">
               </div>
             </form>
           </div>
@@ -62,3 +63,10 @@
     </footer>
   </body>
 </html>
+
+
+<script type="text/javascript">
+    function Cancel() {
+      window.location.href = "/";
+    }
+</script>

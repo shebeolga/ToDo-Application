@@ -67,12 +67,14 @@ def signup():
         )
 
         if not check_password_hash(hashed_password, request.form["repeat-password"]):
-            return "Password have to be the same!"
+            error = "Password must be the same!"
+            return render_template('sign_up.html', error=error)
 
         existing_user = db_session.query(User).filter_by(email=email).first()
 
         if existing_user:
-            return "User with this email already existis!"
+            error = "User with this email already existis!"
+            return render_template('sign_up.html', error=error)
 
         new_user = User(user_name=name, email=email, password=hashed_password)
         db_session.add(new_user)
@@ -98,11 +100,13 @@ def signin():
         if user_result:
             if check_password_hash(user_result.password, password):
                 session["user"] = str(user_result.user_id)
-                return "User is loged in."
+                return render_template("index.html", user=user)
             else:
-                return "The password is incorrect!"
+                error = "The password is incorrect!"
+                return render_template('sign_in.html', error=error)
         else:
-            return "There is no such use. You have to register!"
+            error = "There is no such use. You have to register!"
+            return render_template('sign_in.html', error=error)
 
     return render_template("sign_in.html", user=user)
 
