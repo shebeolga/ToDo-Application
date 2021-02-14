@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
-from validate_email import validate_email
+# from validate_email import validate_email
 import logging
 import os
 from database import *
@@ -44,7 +44,7 @@ def get_current_user():
 
     if "user" in session:
         user = session["user"]
-        result = db_session.query(User).filter_by(user_id=user)
+        result = db_session.query(User).filter_by(user_id=user).first()
 
     return result
 
@@ -64,9 +64,9 @@ def signup():
         name = request.form["name"]
         email = request.form["email"]
 
-        if not validate_email(email):
-            error = "Your email is not valid"
-            return render_template('sign_up.html', error=error)
+        # if not validate_email(email):
+        #     error = "Your email is not valid"
+        #     return render_template('sign_up.html', error=error)
 
         hashed_password = generate_password_hash(
             request.form["password"], method="sha256"
@@ -119,14 +119,36 @@ def signin():
 
 @app.route("/signout")
 def signout():
-    # session.pop("user", None)
     session.clear()
     return redirect(url_for("index"))
 
 
-@app.route("/new_task")
+@app.route("/new_task", methods=["GET", "POST"])
 def new_task():
-    return render_template("new_task.html")
+    user = get_current_user()
+
+    if request.method == "POST":
+        task = request.form["task"]
+        comment = request.form["comment"]
+        try:
+            request.form["urgent"]
+            urgent = 1
+        except:
+            urgent = 0
+        try:
+            request.form["important"]
+            important = 1
+        except:
+            important = 0
+
+        new_task = Task(task_name=task, urgent=urgent, important=important)
+        user.tasks.append(new_task)
+        db_session.commit()
+
+        return "<h1>You add new task " + task + " with comment " + comment + ". Urgent: " + str(urgent) + ". Important: " + str(important) + "</h1>"
+
+    return render_template("new_task.html", user=user)
+
 
 if __name__ == "__main__":
     app.run()

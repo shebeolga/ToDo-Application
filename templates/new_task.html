@@ -37,7 +37,7 @@
     <main>
         <div class="layout-positioner">
           <div class="content-form">
-            <form class="form task-form">
+            <form class="form task-form" method="POST" action="{{ url_for('new_task') }}">
               <div class="main-bar">
                 <label class="label" for="task">Task</label>
                 <input class="input" type="text" name="task" id="task" autofocus>
@@ -55,7 +55,7 @@
                     <label class="label" for="important">important</label>
                   </div>
                 </div>
-                <input class="button" type="submit" name="signUp" value="Add task">
+                <input class="button" type="submit" name="new_task" value="Add task">
                 <input class="button" type="button" name="cancel" value="Cancel" onclick="Cancel();">
               </div>
             </form>
