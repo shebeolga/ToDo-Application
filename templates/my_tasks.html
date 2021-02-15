@@ -11,12 +11,12 @@
       <div class="layout-positioner">
         <nav>
           <div class="logo">
-            <a href="#"><img src="static\img\double-tick.png" alt="Logo"></a>
+            <a href="{{ url_for('index') }}"><img src="static\img\double-tick.png" alt="Logo"></a>
           </div>
           <div class="menu-actions">
             <a class="menu-item" href="{{ url_for('index') }}">My ToDo App</a>
             {% if user %}
-            <a class="menu-item active-button" href="#">Active</a>
+            <a class="menu-item active-button" href="{{ url_for('my_tasks') }}">Active</a>
             <a class="menu-item" href="#">Archive</a>
             <a class="menu-item" href="#">Reports</a>
             {% endif %}
@@ -39,7 +39,7 @@
           <div class="content-form">
             <div class="matrix">
               <div class="row">
-                <button class="button add-button" type="button" name="add-button" onclick="NewTask();">Add new</button>
+                <input class="button add-button" type="button" name="add-button" value="Add new" onclick="NewTask();">
                 <div class="horizon-text">Urgent</div>
                 <div class="horizon-text">Not Urgent</div>
               </div>

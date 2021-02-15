@@ -60,6 +60,9 @@ def index():
 def signup():
     user = get_current_user()
 
+    if user:
+        return redirect(url_for('my_tasks'))
+
     if request.method == "POST":
         name = request.form["name"]
         email = request.form["email"]
@@ -98,6 +101,9 @@ def signin():
     user = get_current_user()
     error = None
 
+    if user:
+        return redirect(url_for('my_tasks'))
+
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
@@ -122,9 +128,12 @@ def signout():
     return redirect(url_for("index"))
 
 
-@app.route("/my_tasks")
+@app.route("/my_tasks", methods=["GET", "POST"])
 def my_tasks():
     user = get_current_user()
+
+    if not user:
+        return redirect(url_for('signin'))
 
     tasks = db_session.query(Task).filter_by(
         user_id=user.user_id).filter_by(done=0, deleted=0).all()
@@ -135,6 +144,9 @@ def my_tasks():
 @app.route("/new_task", methods=["GET", "POST"])
 def new_task():
     user = get_current_user()
+
+    if not user:
+        return redirect(url_for('signin'))
 
     if request.method == "POST":
         task = request.form["task"]
@@ -164,7 +176,7 @@ def new_task():
     return render_template("new_task.html", user=user)
 
 
-@app.route("/update/<task_id>")
+@app.route("/update/<task_id>", methods=['GET', 'POST'])
 def update(task_id):
     user = get_current_user()
 
@@ -173,7 +185,31 @@ def update(task_id):
 
     task = db_session.query(Task).filter_by(task_id=task_id).first()
 
-    return render_template("update_task.html", user=user, task=task)
+    return render_template("update.html", user=user, task=task)
+
+# @app.route("/update")
+# def update():
+#     return render_template("update.html")
+
+
+@app.route("/proceed_update")
+def proceed_update():
+    pass
+
+
+@app.route("/proceed_done/<task_id>")
+def proceed_done(task_id):
+    user = get_current_user()
+
+    if not user:
+        return redirect(url_for('signin'))
+
+    task = db_session.query(Task).filter_by(task_id=task_id).first()
+
+    task.done = True
+    db_session.commit()
+
+    return redirect(url_for('my_tasks'))
 
 
 if __name__ == "__main__":
