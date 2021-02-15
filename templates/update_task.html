@@ -33,18 +33,18 @@
             <form class="form task-form">
               <div class="main-bar">
                 <label class="label" for="task">Task</label>
-                <input class="input" type="text" name="task" id="task" autofocus>
+                <input class="input" type="text" name="task" id="task" value="{{ task.task_name }}" autofocus>
                 <label class="label" for="comment">Comment</label>
                 <textarea class="textarea" rows="5" cols="40" name="comment" id="comment"></textarea>
               </div>
               <div class="side-bar">
                 <div class="checkboxes">
                   <div class="checkbox">
-                    <input type="checkbox" name="urgent" id="urgent" value="urgent">
+                    <input type="checkbox" name="urgent" id="urgent" value="urgent" {% if task.urgent == True %} checked {% endif %}>
                     <label class="label" for="urgent">urgent</label>
                   </div>
                   <div class="checkbox">
-                    <input type="checkbox" name="important" id="important" value="important">
+                    <input type="checkbox" name="important" id="important" value="important" {% if task.important == True %} checked {% endif %}>
                     <label class="label" for="important">important</label>
                   </div>
                 </div>

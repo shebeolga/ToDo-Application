@@ -126,7 +126,8 @@ def signout():
 def my_tasks():
     user = get_current_user()
 
-    tasks = db_session.query(Task).filter_by(user_id=user.user_id).all()
+    tasks = db_session.query(Task).filter_by(
+        user_id=user.user_id).filter_by(done=0, deleted=0).all()
 
     return render_template("my_tasks.html", user=user, tasks=tasks)
 
@@ -163,9 +164,16 @@ def new_task():
     return render_template("new_task.html", user=user)
 
 
-@app.route("/update", methods=["GET", "POST"])
+@app.route("/update/<task_id>")
 def update(task_id):
-    pass
+    user = get_current_user()
+
+    if not user:
+        return redirect(url_for('signin'))
+
+    task = db_session.query(Task).filter_by(task_id=task_id).first()
+
+    return render_template("update_task.html", user=user, task=task)
 
 
 if __name__ == "__main__":

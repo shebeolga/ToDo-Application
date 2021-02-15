@@ -48,7 +48,7 @@
                 <fieldset class="fieldset">
                   {% for task in tasks %}
                     {% if task.urgent == True and task.important == True %}
-                      <a href="" class="task-link">
+                      <a href="{{ url_for('update', task_id=task.task_id) }}" class="task-link">
                         <div class="task">{{ task.task_name }}</div>
                       </a>
                     {% endif %}
@@ -57,7 +57,7 @@
                 <fieldset class="fieldset">
                   {% for task in tasks %}
                     {% if task.urgent == False and task.important == True %}
-                      <a href="" class="task-link">
+                      <a href="{{ url_for('update', task_id=task.task_id) }}" class="task-link">
                         <div class="task">{{ task.task_name }}</div>
                       </a>
                     {% endif %}
@@ -69,7 +69,7 @@
                 <fieldset class="fieldset">
                   {% for task in tasks %}
                     {% if task.urgent == True and task.important == False %}
-                      <a href="" class="task-link">
+                      <a href="{{ url_for('update', task_id=task.task_id) }}" class="task-link">
                         <div class="task">{{ task.task_name }}</div>
                       </a>
                     {% endif %}
@@ -78,7 +78,7 @@
                 <fieldset class="fieldset">
                   {% for task in tasks %}
                     {% if task.urgent == False and task.important == False %}
-                      <a href="" class="task-link">
+                      <a href="{{ url_for('update', task_id=task.task_id) }}" class="task-link">
                         <div class="task">{{ task.task_name }}</div>
                       </a>
                     {% endif %}
