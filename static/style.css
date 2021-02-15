@@ -1,12 +1,15 @@
 :root {
-  --dark: #3797a4;
-  --medium: #8bcdcd;
-  --main-background: #f6f6f6;
+  --dark: #3797A4;
+  --medium: #8BCDCD;
+  --light: #E1EEEE;
+  --main-background: #F6F6F6;
 }
 
 @font-face {
   font-family: "Roboto";
-  src: local("Roboto Regular"), url("roboto.woff") format("woff");
+  src:
+    local("Roboto Regular"),
+    url("roboto.woff") format("woff");
 }
 
 html,
@@ -14,7 +17,7 @@ body {
   margin: 0;
   font-size: 15px;
   font-family: "Arial", sans-serif;
-  height: 100%;
+  height: 100%
 }
 
 body {
@@ -70,7 +73,7 @@ nav {
   padding: 5px;
 }
 
-.menu-item:hover {
+.menu-item:hover{
   background: var(--dark);
   border: 1px solid var(--dark);
   border-radius: 10px;
@@ -89,7 +92,7 @@ main {
   align-content: center;
 }
 
-.content {
+.content{
   display: grid;
   grid-template-columns: 3fr 2fr;
   gap: 50px;
@@ -97,7 +100,7 @@ main {
   padding: 20px;
 }
 
-.content-form {
+.content-form{
   display: flex;
   width: 100%;
   height: 100%;
@@ -140,20 +143,33 @@ main {
 .matrix {
   display: grid;
   grid-template-rows: 1fr 5fr 5fr;
-  min-height: 80%;
+  height: 80%;
+  height: 80%;
 }
 
 .row {
   display: grid;
   grid-template-columns: 1fr 4fr 4fr;
+  min-height: 100%;
+  max-height: 100%;
 }
 
 .fieldset {
-  border: 2px solid var(--dark);
+  overflow: auto;
+  padding: 0;
+  border: 2px solid var(--medium);
   border-radius: 10px;
-  background-color: var(--medium);
-  opacity: 0.3;
+  background-color: var(--light);
   margin: 5px;
+}
+
+.task-link {
+  text-decoration: none;
+  color: black;
+}
+
+.task {
+  margin: 10px;
 }
 
 .label {
@@ -167,16 +183,16 @@ main {
 }
 
 .horizon-text {
-  text-align: center;
-  margin: auto;
-  padding: auto;
-  font-size: 17px;
-  color: var(--dark);
+    text-align: center;
+    margin: auto;
+    margin-bottom: 30px;
+    padding: auto;
+    font-size: 17px;
+    color: var(--dark);
 }
 
 .vertical-text {
   transform: rotate(270deg);
-  transform-origin: top bottom;
   margin: auto;
   color: var(--dark);
   font-size: 17px;
@@ -205,6 +221,7 @@ main {
 }
 
 .add-button {
+  background: var(--medium);
   margin: auto;
   padding: 10px;
   font-size: 15px;
