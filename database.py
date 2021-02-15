@@ -18,13 +18,6 @@ engine = create_engine("sqlite:///database.db")
 Base = declarative_base()
 
 
-task_category = Table(
-    "task_categories",
-    Base.metadata,
-    Column("task_id", Integer, ForeignKey("tasks.task_id")),
-    Column("category_id", Integer, ForeignKey("categories.category_id")),
-)
-
 task_letter = Table(
     "task_letter",
     Base.metadata,
@@ -53,10 +46,9 @@ class Task(Base):
     important = Column(Boolean)
     create_date = Column(DateTime, default=datetime.now, nullable=False)
     done_date = Column(DateTime)
-    done = Column(Boolean)
-    deleted = Column(Boolean)
+    done = Column(Boolean, default=0)
+    deleted = Column(Boolean, default=0)
     comments = relationship("Comment")
-    categories = relationship("Category", secondary=task_category)
     letters = relationship("Letter", secondary=task_letter)
 
 
@@ -66,14 +58,6 @@ class Comment(Base):
     task_id = Column(Integer, ForeignKey("tasks.task_id"))
     comment = Column(Text, nullable=False)
     add_date = Column(DateTime, default=datetime.now, nullable=False)
-
-
-class Category(Base):
-    __tablename__ = "categories"
-    category_id = Column(Integer, primary_key=True, autoincrement=True)
-    category_name = Column(String, nullable=False)
-    color = Column(String, nullable=False)
-    tasks = relationship("Task", secondary=task_category)
 
 
 class Letter(Base):
@@ -90,7 +74,8 @@ if __name__ == "__main__":
     Session = sessionmaker(engine)
     session = Session()
 
-    user = User(user_name="Olga", email="shebeolga@gmail.com", password="123456")
+    user = User(user_name="Olga", email="shebeolga@gmail.com",
+                password="123456")
     session.add(user)
 
     # task = Task(user_id=1, task_name='New task', urgent=True, important=False, done=0, deleted=0)

@@ -88,7 +88,7 @@ def signup():
 
         session["user"] = str(new_user.user_id)
 
-        return render_template("index.html", user=user)
+        return redirect(url_for("my_tasks"))
 
     return render_template("sign_up.html", user=user)
 
@@ -96,6 +96,7 @@ def signup():
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
     user = get_current_user()
+    error = None
 
     if request.method == "POST":
         email = request.form["email"]
@@ -106,21 +107,28 @@ def signin():
         if user_result:
             if check_password_hash(user_result.password, password):
                 session["user"] = str(user_result.user_id)
-                return render_template("index.html", user=user)
+                return redirect(url_for("my_tasks"))
             else:
                 error = "The password is incorrect!"
-                return render_template('sign_in.html', error=error)
         else:
             error = "There is no such user. You have to register!"
-            return render_template('sign_in.html', error=error)
 
-    return render_template("sign_in.html", user=user)
+    return render_template("sign_in.html", user=user, error=error)
 
 
 @app.route("/signout")
 def signout():
     session.clear()
     return redirect(url_for("index"))
+
+
+@app.route("/my_tasks")
+def my_tasks():
+    user = get_current_user()
+
+    tasks = db_session.query(Task).filter_by(user_id=user.user_id).all()
+
+    return render_template("my_tasks.html", user=user, tasks=tasks)
 
 
 @app.route("/new_task", methods=["GET", "POST"])
@@ -150,9 +158,14 @@ def new_task():
             new_task.comments.append(new_comment)
             db_session.commit()
 
-        return "<h1>You add new task " + task + " with comment " + comment + ". Urgent: " + str(urgent) + ". Important: " + str(important) + "</h1>"
+        return render_template("my_tasks.html", user=user)
 
     return render_template("new_task.html", user=user)
+
+
+@app.route("/update", methods=["GET", "POST"])
+def update(task_id):
+    pass
 
 
 if __name__ == "__main__":

@@ -14,14 +14,21 @@
             <a href="#"><img src="static\img\double-tick.png" alt="Logo"></a>
           </div>
           <div class="menu-actions">
+            <a class="menu-item" href="{{ url_for('index') }}">My ToDo App</a>
+            {% if user %}
             <a class="menu-item active-button" href="#">Active</a>
             <a class="menu-item" href="#">Archive</a>
             <a class="menu-item" href="#">Reports</a>
+            {% endif %}
           </div>
           <div class="menu-log">
-            <a class="menu-item" href="#">Sign Up</a>
-            <a class="menu-item" href="#">Sign In</a>
-            <a class="menu-item" href="#">Sign Out</a>
+            {% if not user %}
+            <a class="menu-item" href="{{ url_for('signup') }}">Sign Up</a>
+            <a class="menu-item" href="{{ url_for('signin') }}">Sign In</a>
+            {% endif %}
+            {% if user %}
+            <a class="menu-item" href="{{ url_for('signout') }}">Sign Out</a>
+            {% endif %}
           </div>
         </nav>
       </div>
@@ -32,64 +39,50 @@
           <div class="content-form">
             <div class="matrix">
               <div class="row">
-                <button class="button add-button" type="button" name="add-button">Add new</button>
+                <button class="button add-button" type="button" name="add-button" onclick="NewTask();">Add new</button>
                 <div class="horizon-text">Urgent</div>
                 <div class="horizon-text">Not Urgent</div>
               </div>
               <div class="row">
                 <div class="vertical-text">Important</div>
                 <fieldset class="fieldset">
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
+                  {% for task in tasks %}
+                    {% if task.urgent == True and task.important == True %}
+                      <a href="" class="task-link">
+                        <div class="task">{{ task.task_name }}</div>
+                      </a>
+                    {% endif %}
+                  {% endfor %}
                 </fieldset>
                 <fieldset class="fieldset">
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
+                  {% for task in tasks %}
+                    {% if task.urgent == False and task.important == True %}
+                      <a href="" class="task-link">
+                        <div class="task">{{ task.task_name }}</div>
+                      </a>
+                    {% endif %}
+                  {% endfor %}
                 </fieldset>
               </div>
               <div class="row">
                 <div class="vertical-text">Not Important</div>
                 <fieldset class="fieldset">
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
+                  {% for task in tasks %}
+                    {% if task.urgent == True and task.important == False %}
+                      <a href="" class="task-link">
+                        <div class="task">{{ task.task_name }}</div>
+                      </a>
+                    {% endif %}
+                  {% endfor %}
                 </fieldset>
                 <fieldset class="fieldset">
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
-                  <a href="" class="task-link">
-                    <div class="task">Task</div>
-                  </a>
+                  {% for task in tasks %}
+                    {% if task.urgent == False and task.important == False %}
+                      <a href="" class="task-link">
+                        <div class="task">{{ task.task_name }}</div>
+                      </a>
+                    {% endif %}
+                  {% endfor %}
                 </fieldset>
               </div>
             </div>
@@ -106,3 +99,9 @@
     </footer>
   </body>
 </html>
+
+<script type="text/javascript">
+  function NewTask() {
+    window.location.href = "/new_task";
+  }
+</script>
