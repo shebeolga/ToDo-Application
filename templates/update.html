@@ -58,7 +58,7 @@
               <input type="hidden" value="{{ task.task_id }}" id="task_value">
               <input class="button" type="submit" value="Update task">
               <input class="button" type="button" value="Mark as done" onclick="Done();">
-              <input class="button" type="button" id="Delete" value="Delete" onclick="Delete();">
+              <input class="button" type="button" value="Delete" onclick="Delete();">
               <input class="button" type="button" value="Cancel" onclick="Cancel();">
             </div>
           </form>
@@ -83,7 +83,8 @@
   }
 
   function Delete() {
-    window.location.href = "/proceed_delete";
+    var task_id = document.getElementById("task_value").value;
+    window.location.href = "/proceed_delete/" + task_id;
   }
 
   function Cancel() {

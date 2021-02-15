@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # from validate_email import validate_email
 import logging
 import os
+from datetime import datetime
 from database import *
 
 logger = logging.getLogger(__name__)
@@ -171,7 +172,7 @@ def new_task():
             new_task.comments.append(new_comment)
             db_session.commit()
 
-        return render_template("my_tasks.html", user=user)
+        return redirect(url_for('my_tasks'))
 
     return render_template("new_task.html", user=user)
 
@@ -186,10 +187,6 @@ def update(task_id):
     task = db_session.query(Task).filter_by(task_id=task_id).first()
 
     return render_template("update.html", user=user, task=task)
-
-# @app.route("/update")
-# def update():
-#     return render_template("update.html")
 
 
 @app.route("/proceed_update")
@@ -207,6 +204,22 @@ def proceed_done(task_id):
     task = db_session.query(Task).filter_by(task_id=task_id).first()
 
     task.done = True
+    task.done_date = datetime.now()
+    db_session.commit()
+
+    return redirect(url_for('my_tasks'))
+
+
+@app.route("/proceed_delete/<task_id>")
+def proceed_delete(task_id):
+    user = get_current_user()
+
+    if not user:
+        return redirect(url_for('signin'))
+
+    task = db_session.query(Task).filter_by(task_id=task_id).first()
+
+    task.deleted = True
     db_session.commit()
 
     return redirect(url_for('my_tasks'))
