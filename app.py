@@ -246,5 +246,15 @@ def proceed_delete(task_id):
     return redirect(url_for('my_tasks'))
 
 
+@app.route("/archive")
+def archive():
+    return "<h1>The page is under construction...</h1>"
+
+
+@app.route("/reports")
+def reports():
+    return "<h1>The page is under construction...</h1>"
+
+
 if __name__ == "__main__":
     app.run()
