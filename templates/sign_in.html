@@ -41,10 +41,14 @@
               {% if error %}
               <div class="error">{{ error }}</div>
               {% endif %}
-              <label class="label" for="email">E-mail</label>
-              <input class="input" type="email" name="email" id="email" autofocus>
-              <label class="label" for="password">Password</label>
-              <input class="input" type="password" name="password" id="passwprd">
+              <div class="label-input-group">
+                <label class="label" for="email">E-mail</label>
+                <input class="input" type="email" name="email" id="email" autofocus>
+              </div>
+              <div class="label-input-group">
+                <label class="label" for="password">Password</label>
+                <input class="input" type="password" name="password" id="passwprd">
+              </div>
               <div class="button-group">
                 <input class="button" type="submit" name="signIn" value="Sign In">
                 <input class="button" type="button" name="cancel" id="cancel" value="Cancel" onclick="Cancel();">

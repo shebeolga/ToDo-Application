@@ -39,10 +39,14 @@
           <div class="content-form">
             <form class="form task-form" method="POST" action="{{ url_for('new_task') }}">
               <div class="main-bar">
-                <label class="label" for="task">Task</label>
-                <input class="input" type="text" name="task" id="task" autofocus>
-                <label class="label" for="comment">Comment</label>
-                <textarea class="textarea" rows="5" cols="40" name="comment" id="comment"></textarea>
+                <div class="label-input-group">
+                  <label class="label" for="task">Task</label>
+                  <input class="input" type="text" name="task" id="task" autofocus>
+                </div>
+                  <div class="label-input-group">
+                  <label class="label" for="comment">Comment</label>
+                <textarea class="input" rows="3" cols="40" name="comment" id="comment"></textarea>
+                </div>
               </div>
               <div class="side-bar">
                 <div class="checkboxes">
@@ -55,8 +59,10 @@
                     <label class="label" for="important">important</label>
                   </div>
                 </div>
+                <div class="button-task-group">
                 <input class="button" type="submit" name="new_task" value="Add task">
                 <input class="button" type="button" name="cancel" value="Cancel" onclick="Cancel();">
+                </div>
               </div>
             </form>
           </div>

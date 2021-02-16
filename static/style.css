@@ -1,15 +1,13 @@
 :root {
-  --dark: #3797A4;
-  --medium: #8BCDCD;
-  --light: #E1EEEE;
-  --main-background: #F6F6F6;
+  --dark: #3797a4;
+  --medium: #8bcdcd;
+  --light: #e1eeee;
+  --main-background: #f6f6f6;
 }
 
 @font-face {
   font-family: "Roboto";
-  src:
-    local("Roboto Regular"),
-    url("roboto.woff") format("woff");
+  src: local("Roboto Regular"), url("roboto.woff") format("woff");
 }
 
 html,
@@ -17,7 +15,7 @@ body {
   margin: 0;
   font-size: 15px;
   font-family: "Arial", sans-serif;
-  height: 100%
+  height: 100%;
 }
 
 body {
@@ -73,7 +71,7 @@ nav {
   padding: 5px;
 }
 
-.menu-item:hover{
+.menu-item:hover {
   background: var(--dark);
   border: 1px solid var(--dark);
   border-radius: 10px;
@@ -92,7 +90,7 @@ main {
   align-content: center;
 }
 
-.content{
+.content {
   display: grid;
   grid-template-columns: 3fr 2fr;
   gap: 50px;
@@ -100,7 +98,7 @@ main {
   padding: 20px;
 }
 
-.content-form{
+.content-form {
   display: flex;
   width: 100%;
   height: 100%;
@@ -114,6 +112,7 @@ main {
   padding: 20px;
   border: 5px solid var(--medium);
   border-radius: 10px;
+  max-height: 60%;
 }
 
 .sign-form {
@@ -125,19 +124,26 @@ main {
   width: 50%;
   display: grid;
   grid-template-columns: 2fr 1fr;
+  border: 5px solid var(--medium);
+  border-radius: 10px;
 }
 
 .main-bar {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-right: 30px;
+  padding: 0;
+  min-height: 70%;
+  max-height: 70%;
 }
 
 .side-bar {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
+  min-height: 70%;
+  max-height: 70%;
 }
 
 .matrix {
@@ -163,6 +169,15 @@ main {
   margin: 5px;
 }
 
+.comment-fieldset {
+  min-height: 40%;
+  max-height: 40%;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .task-link {
   text-decoration: none;
   color: black;
@@ -172,23 +187,39 @@ main {
   margin: 10px;
 }
 
+.label-input-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
 .label {
-  margin: 5px;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .input {
+  margin: 0;
+  outline: none;
+  border: 1px solid var(--dark);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+textarea {
+  resize: none;
+}
+
+.comment {
   margin: 10px;
-  margin-top: 0;
 }
 
 .horizon-text {
-    text-align: center;
-    margin: auto;
-    margin-bottom: 30px;
-    padding: auto;
-    font-size: 17px;
-    color: var(--dark);
+  text-align: center;
+  margin: auto;
+  margin-bottom: 30px;
+  padding: auto;
+  font-size: 17px;
+  color: var(--dark);
 }
 
 .vertical-text {
@@ -207,10 +238,16 @@ main {
 .button-group {
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
+}
+
+.button-task-group {
+  display: flex;
+  flex-direction: column;
 }
 
 .button {
-  background: var(--dark);
+  background: var(--medium);
   color: black;
   font-size: 15px;
   text-decoration: none;
@@ -218,6 +255,10 @@ main {
   padding: 5px 10px;
   border: 1px solid var(--dark);
   border-radius: 10px;
+}
+
+.button:hover {
+  background: var(--dark);
 }
 
 .add-button {
@@ -234,6 +275,7 @@ main {
 
 .checkbox {
   padding-right: 20px;
+  padding-bottom: 10px;
 }
 
 footer {

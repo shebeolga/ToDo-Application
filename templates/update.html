@@ -39,10 +39,20 @@
         <div class="content-form">
           <form class="form task-form" method="POST">
             <div class="main-bar">
-              <label class="label" for="task">Task</label>
-              <input class="input" type="text" name="task" id="task" value="{{ task.task_name }}" autofocus>
-              <label class="label" for="comment">Comment</label>
-              <textarea class="textarea" rows="5" cols="40" name="comment" id="comment"></textarea>
+              <div class="label-input-group">
+                <label class="label" for="task">Task</label>
+                <input class="input" type="text" name="task" id="task" value="{{ task.task_name }}" autofocus>
+              </div>
+              <fieldset class="fieldset comment-fieldset">
+                <legend>Comments</legend>
+                  {% for comment in comments %}
+                    <div class="comment">{{ comment.comment }}</div>
+                  {% endfor %}
+              </fieldset>
+              <div class="label-input-group">
+                <label class="label" for="comment">Comment</label>
+                <textarea class="input" rows="3" cols="40" name="comment" id="comment"></textarea>
+              </div>
             </div>
             <div class="side-bar">
               <div class="checkboxes">
@@ -55,11 +65,13 @@
                   <label class="label" for="important">important</label>
                 </div>
               </div>
-              <input type="hidden" value="{{ task.task_id }}" id="task_value">
-              <input class="button" type="submit" value="Update task">
-              <input class="button" type="button" value="Mark as done" onclick="Done();">
-              <input class="button" type="button" value="Delete" onclick="Delete();">
-              <input class="button" type="button" value="Cancel" onclick="Cancel();">
+              <div class="button-task-group">
+                <input type="hidden" value="{{ task.task_id }}" id="task_value">
+                <input class="button" type="submit" value="Update task">
+                <input class="button" type="button" value="Mark as done" onclick="Done();">
+                <input class="button" type="button" value="Delete" onclick="Delete();">
+                <input class="button" type="button" value="Cancel" onclick="Cancel();">
+              </div>
             </div>
           </form>
         </div>

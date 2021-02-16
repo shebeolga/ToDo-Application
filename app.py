@@ -185,6 +185,7 @@ def update(task_id):
         return redirect(url_for('signin'))
 
     task = db_session.query(Task).filter_by(task_id=task_id).first()
+    comments = db_session.query(Comment).filter_by(task_id=task_id).all()
 
     if request.method == "POST":
         new_task = request.form["task"]
@@ -212,7 +213,7 @@ def update(task_id):
 
         return redirect(url_for("my_tasks"))
 
-    return render_template("update.html", user=user, task=task)
+    return render_template("update.html", user=user, task=task, comments=comments)
 
 
 @app.route("/proceed_done/<task_id>")
