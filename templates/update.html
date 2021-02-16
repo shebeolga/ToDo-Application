@@ -37,7 +37,7 @@
     <main>
       <div class="layout-positioner">
         <div class="content-form">
-          <form class="form task-form" method="POST" action="{{ url_for('proceed_update') }} ">
+          <form class="form task-form" method="POST">
             <div class="main-bar">
               <label class="label" for="task">Task</label>
               <input class="input" type="text" name="task" id="task" value="{{ task.task_name }}" autofocus>

@@ -186,12 +186,33 @@ def update(task_id):
 
     task = db_session.query(Task).filter_by(task_id=task_id).first()
 
+    if request.method == "POST":
+        new_task = request.form["task"]
+        new_comment = request.form["comment"]
+        try:
+            request.form["urgent"]
+            urgent = 1
+        except:
+            urgent = 0
+        try:
+            request.form["important"]
+            important = 1
+        except:
+            important = 0
+
+        task.task_name = new_task
+        task.urgent = urgent
+        task.important = important
+        db_session.commit()
+
+        if new_comment.strip():
+            add_comment = Comment(comment=new_comment)
+            task.comments.append(add_comment)
+            db_session.commit()
+
+        return redirect(url_for("my_tasks"))
+
     return render_template("update.html", user=user, task=task)
-
-
-@app.route("/proceed_update")
-def proceed_update():
-    pass
 
 
 @app.route("/proceed_done/<task_id>")
