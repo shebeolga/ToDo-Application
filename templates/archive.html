@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Archive</title>
+    <link rel="shortcut icon" href="static\img\double-tick.png" type="image/x-icon">
+    <link rel="stylesheet" href="static\style.css">
+  </head>
+  <body>
+    <header>
+      <div class="layout-positioner">
+        <nav>
+          <div class="logo">
+            <a href="{{ url_for('index') }} "><img src="..\static\img\double-tick.png" alt="Logo"></a>
+          </div>
+          <div class="menu-actions">
+            <a class="menu-item" href="{{ url_for('index') }}">My ToDo App</a>
+            {% if user %}
+            <a class="menu-item" href="{{ url_for('my_tasks') }}">Active</a>
+            <a class="menu-item active-button" href="{{ url_for('archive') }}">Archive</a>
+            <a class="menu-item" href="{{ url_for('reports') }}">Reports</a>
+            {% endif %}
+          </div>
+          <div class="menu-log">
+            {% if not user %}
+            <a class="menu-item" href="{{ url_for('signup') }}">Sign Up</a>
+            <a class="menu-item" href="{{ url_for('signin') }}">Sign In</a>
+            {% endif %}
+            {% if user %}
+            <a class="menu-item" href="{{ url_for('signout') }}">Sign Out</a>
+            {% endif %}
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+        <div class="layout-positioner">
+          <div class="archive-content-form">
+            <div class="archive-select-period">
+              <div class="archive-head">What I've done:</div>
+              <div class="archive-bytton-group">
+                <input type="button" class="button archive-button" value="Today">
+                <input type="button" class="button archive-button" value="Week">
+                <input type="button" class="button archive-button" value="Month">
+                <input type="button" class="button archive-button" value="Year">
+              </div>
+              <div class="archive-date-group">
+                <label>From:<input type="date" class="date"></label>
+                <label>Till:<input type="date" class="date"></label>
+                <input type="button" class="button archive-button" value="Select">
+              </div>
+            </div>
+            <div class="archive-tasks">
+              <fieldset class="fieldset arcive-fieldset">
+                {% for task in tasks %}
+                <a href="" class="task-link">
+                  <div class="task">{{ task.task_name }}</div>
+                </a>
+                {% endfor %}
+              </fieldset>
+            </div>
+            <div class="total-group">
+              <div class="first-total-row">
+                <div class="total">
+                  <div class="label-number">Total:</div>
+                  <div class="number">5</div>
+                </div>
+                <div class="total total-item">
+                  <div class="label-number">Urgent and important:</div>
+                  <div class="number">5</div>
+                </div>
+                <div class="total total-item">
+                  <div class="label-number">Important, not urgent:</div>
+                  <div class="number">5</div>
+                </div>
+              </div>
+              <div class="second-total-row">
+                <div class="total total-item">
+                  <div class="label-number">Urgent, not important:</div>
+                  <div class="number">5</div>
+                </div>
+                <div class="total total-item">
+                  <div class="label-number">Not urgent, not important:</div>
+                  <div class="number">5</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </main>
+
+    <footer>
+      <div class="layout-positioner">
+        <div class="copyright">
+          © Olga Shebeko, 2021
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import func
 from werkzeug.security import generate_password_hash, check_password_hash
 # from validate_email import validate_email
 import logging
@@ -249,7 +250,19 @@ def proceed_delete(task_id):
 
 @app.route("/archive")
 def archive():
-    return "<h1>The page is under construction...</h1>"
+    user = get_current_user()
+
+    if not user:
+        return redirect(url_for('signin'))
+
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
+
+    tasks = db_session.query(Task).\
+        filter_by(user_id=user.user_id).\
+        filter_by(done=1, deleted=0).\
+        filter(func.DATE(Task.done_date) == today).all()
+
+    return render_template("archive.html", user=user, tasks=tasks)
 
 
 @app.route("/reports")

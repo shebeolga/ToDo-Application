@@ -108,6 +108,16 @@ main {
   margin-right: auto;
 }
 
+.archive-content-form {
+  display: flex;
+  width: 60%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .form {
   padding: 20px;
   border: 5px solid var(--medium);
@@ -178,6 +188,15 @@ main {
   margin-bottom: 10px;
 }
 
+.archive-tasks {
+  height: 40%;
+  margin-bottom: 20px;
+}
+
+.arcive-fieldset {
+  height: 100%;
+}
+
 .task-link {
   text-decoration: none;
   color: black;
@@ -197,6 +216,47 @@ main {
   margin: 0;
 }
 
+.total-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.first-total-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+}
+
+.second-total-row {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+}
+
+.total {
+  display: flex;
+  margin: 5px;
+}
+
+.total-item {
+  justify-self: end;
+}
+
+.label-number {
+  align-self: center;
+}
+
+.number {
+  background-color: var(--light);
+  padding: 5px;
+  border: 1px solid var(--medium);
+  border-radius: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.archive-head {
+  font-size: 1.5rem;
+}
+
 .input {
   margin: 0;
   outline: none;
@@ -207,6 +267,19 @@ main {
 
 textarea {
   resize: none;
+}
+
+.archive-head {
+  margin-bottom: 10px;
+}
+
+.archive-date-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.date {
+  margin: 10px;
 }
 
 .comment {
@@ -246,6 +319,11 @@ textarea {
   flex-direction: column;
 }
 
+.archive-bytton-group {
+  display: flex;
+  justify-content: space-between;
+}
+
 .button {
   background: var(--medium);
   color: black;
@@ -266,6 +344,10 @@ textarea {
   margin: auto;
   padding: 10px;
   font-size: 15px;
+}
+
+.archive-button {
+  width: 20%;
 }
 
 .checkboxes {
