@@ -257,12 +257,30 @@ def archive():
 
     today = datetime.strftime(datetime.now(), '%Y-%m-%d')
 
-    tasks = db_session.query(Task).\
+    query_tasks = db_session.query(Task).\
         filter_by(user_id=user.user_id).\
         filter_by(done=1, deleted=0).\
-        filter(func.DATE(Task.done_date) == today).all()
+        filter(func.DATE(Task.done_date) == today)
 
-    return render_template("archive.html", user=user, tasks=tasks)
+    tasks = query_tasks.all()
+
+    counts = {}
+    counts["all_tasks"] = query_tasks.count()
+
+    urgent_important_tasks = query_tasks.filter_by(
+        urgent=1, important=1).count()
+    counts["urgent_important_tasks"] = urgent_important_tasks
+    urgent_not_important_tasks = query_tasks.filter_by(
+        urgent=1, important=0).count()
+    counts["urgent_not_important_tasks"] = urgent_not_important_tasks
+    not_urgent_important_tasks = query_tasks.filter_by(
+        urgent=0, important=1).count()
+    counts["not_urgent_important_tasks"] = not_urgent_important_tasks
+    not_urgent_not_important_tasks = query_tasks.filter_by(
+        urgent=0, important=0).count()
+    counts["not_urgent_not_important_tasks"] = not_urgent_not_important_tasks
+
+    return render_template("archive.html", user=user, tasks=tasks, counts=counts)
 
 
 @app.route("/reports")

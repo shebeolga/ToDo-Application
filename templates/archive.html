@@ -47,7 +47,7 @@
               </div>
               <div class="archive-date-group">
                 <label>From:<input type="date" class="date"></label>
-                <label>Till:<input type="date" class="date"></label>
+                <label>To:<input type="date" class="date"></label>
                 <input type="button" class="button archive-button" value="Select">
               </div>
             </div>
@@ -64,25 +64,25 @@
               <div class="first-total-row">
                 <div class="total">
                   <div class="label-number">Total:</div>
-                  <div class="number">5</div>
+                  <div class="number">{{ counts["all_tasks"] }}</div>
                 </div>
                 <div class="total total-item">
                   <div class="label-number">Urgent and important:</div>
-                  <div class="number">5</div>
+                  <div class="number">{{ counts["urgent_important_tasks"] }}</div>
                 </div>
                 <div class="total total-item">
                   <div class="label-number">Important, not urgent:</div>
-                  <div class="number">5</div>
+                  <div class="number">{{ counts["not_urgent_important_tasks"] }}</div>
                 </div>
               </div>
               <div class="second-total-row">
                 <div class="total total-item">
                   <div class="label-number">Urgent, not important:</div>
-                  <div class="number">5</div>
+                  <div class="number">{{ counts["urgent_not_important_tasks"] }}</div>
                 </div>
                 <div class="total total-item">
                   <div class="label-number">Not urgent, not important:</div>
-                  <div class="number">5</div>
+                  <div class="number">{{ counts["not_urgent_not_important_tasks"] }}</div>
                 </div>
               </div>
             </div>
