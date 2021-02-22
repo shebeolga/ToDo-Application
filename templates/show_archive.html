@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Archive</title>
     <link rel="shortcut icon" href="static\img\double-tick.png" type="image/x-icon">
-    <link rel="stylesheet" href="static\style.css">
+    <link rel="stylesheet" href="..\static\style.css">
   </head>
   <body>
     <header>
@@ -41,7 +41,7 @@
               <div class="archive-head">What I've done:</div>
               <div class="archive-bytton-group">
                 <input type="button" class="button archive-button" value="Today" 
-                onclick="{{ url_for('archive')}}">
+                onclick="Today();">
                 <input type="button" class="button archive-button" value="Week" 
                   onclick="ShowArchive(7);">
                 <input type="button" class="button archive-button" value="Month"
@@ -105,6 +105,10 @@
 </html>
 
 <script type="text/javascript">
+  function Today() {
+      window.location.href = "/archive";
+    }
+
   function ShowArchive(period) {
     window.location.href = "/show_archive/" + period;
   }

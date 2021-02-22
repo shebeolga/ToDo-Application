@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # from validate_email import validate_email
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from database import *
 
 logger = logging.getLogger(__name__)
@@ -285,6 +285,46 @@ def archive():
     counts["not_urgent_not_important_tasks"] = not_urgent_not_important_tasks
 
     return render_template("archive.html", user=user, tasks=tasks, counts=counts)
+
+
+# Impossible to combine this and previous function, because
+# there'll be an error when we load the archive page for the first time.
+@app.route("/show_archive/<period>")
+def show_archive(period):
+    user = get_current_user()
+
+    if not user:
+        return redirect(url_for('signin'))
+
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    end_point = datetime.now() - timedelta(days=int(period))
+    end_point = datetime.strftime(end_point, '%Y-%m-%d')
+
+    query_tasks = db_session.query(Task).\
+        filter_by(user_id=user.user_id).\
+        filter_by(done=1, deleted=0).\
+        filter(func.DATE(Task.done_date) <= today,
+               func.DATE(Task.done_date) >= end_point)
+
+    tasks = query_tasks.all()
+
+    counts = {}
+    counts["all_tasks"] = query_tasks.count()
+
+    urgent_important_tasks = query_tasks.filter_by(
+        urgent=1, important=1).count()
+    counts["urgent_important_tasks"] = urgent_important_tasks
+    urgent_not_important_tasks = query_tasks.filter_by(
+        urgent=1, important=0).count()
+    counts["urgent_not_important_tasks"] = urgent_not_important_tasks
+    not_urgent_important_tasks = query_tasks.filter_by(
+        urgent=0, important=1).count()
+    counts["not_urgent_important_tasks"] = not_urgent_important_tasks
+    not_urgent_not_important_tasks = query_tasks.filter_by(
+        urgent=0, important=0).count()
+    counts["not_urgent_not_important_tasks"] = not_urgent_not_important_tasks
+
+    return render_template("show_archive.html", user=user, tasks=tasks, counts=counts)
 
 
 @app.route("/reports")
