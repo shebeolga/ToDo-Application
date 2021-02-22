@@ -54,7 +54,7 @@
             <div class="archive-tasks">
               <fieldset class="fieldset arcive-fieldset">
                 {% for task in tasks %}
-                <a href="" class="task-link">
+                <a href="{{ url_for('update', task_id=task.task_id) }}" class="task-link">
                   <div class="task">{{ task.task_name }}</div>
                 </a>
                 {% endfor %}

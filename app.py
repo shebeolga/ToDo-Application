@@ -226,8 +226,12 @@ def proceed_done(task_id):
 
     task = db_session.query(Task).filter_by(task_id=task_id).first()
 
-    task.done = True
-    task.done_date = datetime.now()
+    if task.done:
+        task.done = False
+        task.done_date = None
+    else:
+        task.done = True
+        task.done_date = datetime.now()
     db_session.commit()
 
     return redirect(url_for('my_tasks'))

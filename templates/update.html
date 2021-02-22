@@ -68,7 +68,7 @@
               <div class="button-task-group">
                 <input type="hidden" value="{{ task.task_id }}" id="task_value">
                 <input class="button" type="submit" value="Update task">
-                <input class="button" type="button" value="Mark as done" onclick="Done();">
+                <input class="button" type="button" value="{% if task.done %} Undone {% else %} Mark as done {% endif %}" onclick="Done();">
                 <input class="button" type="button" value="Delete" onclick="Delete();">
                 <input class="button" type="button" value="Cancel" onclick="Cancel();">
               </div>
