@@ -50,9 +50,10 @@
                   onclick="ShowArchive(365);">
               </div>
               <div class="archive-date-group">
-                <label>From:<input type="date" class="date"></label>
-                <label>To:<input type="date" class="date"></label>
-                <input type="button" class="button archive-button" value="Select">
+                <label>From:<input type="date" class="date" id="start_date"></label>
+                <label>To:<input type="date" class="date" id="end_date"></label>
+                <input type="button" class="button archive-button" value="Select"
+                  onclick="ShowPeriodArchive();">
               </div>
             </div>
             <div class="archive-tasks">
@@ -106,19 +107,16 @@
 
 <script type="text/javascript">
   function Today() {
-      window.location.href = "/archive";
-    }
+    window.location.href = "/archive";
+  }
 
   function ShowArchive(period) {
     window.location.href = "/show_archive/" + period;
   }
 
-  // function Delete() {
-  //   var task_id = document.getElementById("task_value").value;
-  //   window.location.href = "/proceed_delete/" + task_id;
-  // }
-
-  // function Cancel() {
-  //   window.location.href = "/my_tasks";
-  // }
+  function ShowPeriodArchive() {
+    var start_date = document.getElementById("start_date").value;
+    var end_date = document.getElementById("end_date").value;
+    window.location.href = "/show_period_archive/" + start_date + "&" + end_date;
+  }
 </script>

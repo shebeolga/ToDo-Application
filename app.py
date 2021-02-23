@@ -327,6 +327,40 @@ def show_archive(period):
     return render_template("show_archive.html", user=user, tasks=tasks, counts=counts)
 
 
+@app.route("/show_period_archive/<start_date>&<end_date>")
+def show_period_archive(start_date, end_date):
+    user = get_current_user()
+
+    if not user:
+        return redirect(url_for('signin'))
+
+    query_tasks = db_session.query(Task).\
+        filter_by(user_id=user.user_id).\
+        filter_by(done=1, deleted=0).\
+        filter(func.DATE(Task.done_date) >= start_date,
+               func.DATE(Task.done_date) <= end_date)
+
+    tasks = query_tasks.all()
+
+    counts = {}
+    counts["all_tasks"] = query_tasks.count()
+
+    urgent_important_tasks = query_tasks.filter_by(
+        urgent=1, important=1).count()
+    counts["urgent_important_tasks"] = urgent_important_tasks
+    urgent_not_important_tasks = query_tasks.filter_by(
+        urgent=1, important=0).count()
+    counts["urgent_not_important_tasks"] = urgent_not_important_tasks
+    not_urgent_important_tasks = query_tasks.filter_by(
+        urgent=0, important=1).count()
+    counts["not_urgent_important_tasks"] = not_urgent_important_tasks
+    not_urgent_not_important_tasks = query_tasks.filter_by(
+        urgent=0, important=0).count()
+    counts["not_urgent_not_important_tasks"] = not_urgent_not_important_tasks
+
+    return render_template("show_period_archive.html", user=user, tasks=tasks, counts=counts)
+
+
 @app.route("/reports")
 def reports():
     return "<h1>The page is under construction...</h1>"
