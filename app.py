@@ -51,6 +51,26 @@ def get_current_user():
     return result
 
 
+def count_types_of_tasks(query_tasks):
+    types_of_tasks = {}
+    types_of_tasks["all_tasks"] = query_tasks.count()
+
+    urgent_important_tasks = query_tasks.filter_by(
+        urgent=1, important=1).count()
+    types_of_tasks["urgent_important_tasks"] = urgent_important_tasks
+    urgent_not_important_tasks = query_tasks.filter_by(
+        urgent=1, important=0).count()
+    types_of_tasks["urgent_not_important_tasks"] = urgent_not_important_tasks
+    not_urgent_important_tasks = query_tasks.filter_by(
+        urgent=0, important=1).count()
+    types_of_tasks["not_urgent_important_tasks"] = not_urgent_important_tasks
+    not_urgent_not_important_tasks = query_tasks.filter_by(
+        urgent=0, important=0).count()
+    types_of_tasks["not_urgent_not_important_tasks"] = not_urgent_not_important_tasks
+
+    return types_of_tasks
+
+
 @app.route("/")
 def index():
     user = get_current_user()
@@ -268,23 +288,9 @@ def archive():
 
     tasks = query_tasks.all()
 
-    counts = {}
-    counts["all_tasks"] = query_tasks.count()
+    count_tasks = count_types_of_tasks(query_tasks)
 
-    urgent_important_tasks = query_tasks.filter_by(
-        urgent=1, important=1).count()
-    counts["urgent_important_tasks"] = urgent_important_tasks
-    urgent_not_important_tasks = query_tasks.filter_by(
-        urgent=1, important=0).count()
-    counts["urgent_not_important_tasks"] = urgent_not_important_tasks
-    not_urgent_important_tasks = query_tasks.filter_by(
-        urgent=0, important=1).count()
-    counts["not_urgent_important_tasks"] = not_urgent_important_tasks
-    not_urgent_not_important_tasks = query_tasks.filter_by(
-        urgent=0, important=0).count()
-    counts["not_urgent_not_important_tasks"] = not_urgent_not_important_tasks
-
-    return render_template("archive.html", user=user, tasks=tasks, counts=counts)
+    return render_template("archive.html", user=user, tasks=tasks, counts=count_tasks)
 
 
 # Impossible to combine this and previous function, because
@@ -308,23 +314,9 @@ def show_archive(period):
 
     tasks = query_tasks.all()
 
-    counts = {}
-    counts["all_tasks"] = query_tasks.count()
+    count_tasks = count_types_of_tasks(query_tasks)
 
-    urgent_important_tasks = query_tasks.filter_by(
-        urgent=1, important=1).count()
-    counts["urgent_important_tasks"] = urgent_important_tasks
-    urgent_not_important_tasks = query_tasks.filter_by(
-        urgent=1, important=0).count()
-    counts["urgent_not_important_tasks"] = urgent_not_important_tasks
-    not_urgent_important_tasks = query_tasks.filter_by(
-        urgent=0, important=1).count()
-    counts["not_urgent_important_tasks"] = not_urgent_important_tasks
-    not_urgent_not_important_tasks = query_tasks.filter_by(
-        urgent=0, important=0).count()
-    counts["not_urgent_not_important_tasks"] = not_urgent_not_important_tasks
-
-    return render_template("show_archive.html", user=user, tasks=tasks, counts=counts)
+    return render_template("show_archive.html", user=user, tasks=tasks, counts=count_tasks)
 
 
 @app.route("/show_period_archive/<start_date>&<end_date>")
@@ -342,23 +334,9 @@ def show_period_archive(start_date, end_date):
 
     tasks = query_tasks.all()
 
-    counts = {}
-    counts["all_tasks"] = query_tasks.count()
+    count_tasks = count_types_of_tasks(query_tasks)
 
-    urgent_important_tasks = query_tasks.filter_by(
-        urgent=1, important=1).count()
-    counts["urgent_important_tasks"] = urgent_important_tasks
-    urgent_not_important_tasks = query_tasks.filter_by(
-        urgent=1, important=0).count()
-    counts["urgent_not_important_tasks"] = urgent_not_important_tasks
-    not_urgent_important_tasks = query_tasks.filter_by(
-        urgent=0, important=1).count()
-    counts["not_urgent_important_tasks"] = not_urgent_important_tasks
-    not_urgent_not_important_tasks = query_tasks.filter_by(
-        urgent=0, important=0).count()
-    counts["not_urgent_not_important_tasks"] = not_urgent_not_important_tasks
-
-    return render_template("show_period_archive.html", user=user, tasks=tasks, counts=counts)
+    return render_template("show_period_archive.html", user=user, tasks=tasks, counts=count_tasks)
 
 
 @app.route("/reports")
