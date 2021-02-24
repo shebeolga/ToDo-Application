@@ -9,6 +9,8 @@ import logging
 import os
 from datetime import datetime, timedelta
 from database import *
+# import mail
+from flask_mail import Mail, Message
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -29,6 +31,16 @@ app.config["DEBUG"] = True
 app.config["SECRET_KEY"] = os.urandom(24)
 # app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USERNAME"] = "shebeolga@gmail.com"
+app.config["MAIL_PASSWORD"] = "o1l1g1a1"
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USE_SSL"] = False
+app.config["MAIL_DEFAULT_SENDER"] = "support@myway.com"
+
+mail = Mail(app)
 
 engine = create_engine("sqlite:///database.db")
 Session = sessionmaker(engine)
@@ -135,6 +147,12 @@ def login():
         if user_result:
             if check_password_hash(user_result.password, password):
                 session["user"] = str(user_result.user_id)
+                # mail.send_register_letter(
+                #     user_result.user_name, user_result.email)
+                msg = Message("This is a letter", recipients=[
+                    user_result.email])
+                msg.body = f"{user_result.user_name}, you logged in the MyWay App"
+                mail.send(msg)
                 return redirect(url_for("my_tasks"))
             else:
                 error = "The password is incorrect!"
