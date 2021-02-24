@@ -23,11 +23,11 @@
           </div>
           <div class="menu-log">
             {% if not user %}
-            <a class="menu-item" href="{{ url_for('signup') }}">Sign Up</a>
-            <a class="menu-item" href="{{ url_for('signin') }}">Sign In</a>
+            <a class="menu-item" href="{{ url_for('register') }}">Register</a>
+            <a class="menu-item" href="{{ url_for('login') }}">Log In</a>
             {% endif %}
             {% if user %}
-            <a class="menu-item" href="{{ url_for('signout') }}">Sign Out</a>
+            <a class="menu-item" href="{{ url_for('logout') }}">Log Out</a>
             {% endif %}
           </div>
         </nav>

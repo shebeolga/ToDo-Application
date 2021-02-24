@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Sign in</title>
+    <title>Sign up</title>
     <link rel="shortcut icon" href="static\img\double-tick.png" type="image/x-icon">
     <link rel="stylesheet" href="static\style.css">
   </head>
@@ -23,11 +23,11 @@
           </div>
           <div class="menu-log">
             {% if not user %}
-            <a class="menu-item" href="{{ url_for('signup') }}">Sign Up</a>
-            <a class="menu-item active-button" href="{{ url_for('signin') }}">Sign In</a>
+            <a class="menu-item active-button" href="{{ url_for('register') }}">Register</a>
+            <a class="menu-item" href="{{ url_for('login') }}">Log In</a>
             {% endif %}
             {% if user %}
-            <a class="menu-item" href="{{ url_for('signout') }}">Sign Out</a>
+            <a class="menu-item" href="{{ url_for('logout') }}">Log Out</a>
             {% endif %}
           </div>
         </nav>
@@ -37,20 +37,28 @@
     <main>
         <div class="layout-positioner">
           <div class="content-form">
-            <form class="form sign-form" method="POST" action="{{ url_for('signin') }}">
+            <form class="form sign-form" method="POST" action="{{ url_for('register') }}">
               {% if error %}
               <div class="error">{{ error }}</div>
               {% endif %}
               <div class="label-input-group">
+                <label class="label" for="name">Name</label>
+                <input class="input" type="text" name="name" id="name" autofocus>
+              </div>
+              <div class="label-input-group">
                 <label class="label" for="email">E-mail</label>
-                <input class="input" type="email" name="email" id="email" autofocus>
+                <input class="input" type="email" name="email" id="email">
               </div>
               <div class="label-input-group">
                 <label class="label" for="password">Password</label>
                 <input class="input" type="password" name="password" id="passwprd">
               </div>
+              <div class="label-input-group">
+                <label class="label" for="repeatPassword">Repeat password</label>
+                <input class="input" type="password" name="repeat-password" id="repeat-password">
+              </div>
               <div class="button-group">
-                <input class="button" type="submit" name="signIn" value="Sign In">
+                <input class="button" type="submit" name="signUp" value="Sign up">
                 <input class="button" type="button" name="cancel" id="cancel" value="Cancel" onclick="Cancel();">
               </div>
             </form>
@@ -68,9 +76,8 @@
   </body>
 </html>
 
-
 <script type="text/javascript">
-    function Cancel() {
-      window.location.href = "/";
-    }
+  function Cancel() {
+    window.location.href = "/";
+  }
 </script>

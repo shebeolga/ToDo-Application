@@ -32,12 +32,12 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 engine = create_engine("sqlite:///database.db")
 Session = sessionmaker(engine)
-db_session = Session()
+db = Session()
 
 
 @app.teardown_appcontext
 def close_db(error):
-    db_session.close()
+    db.close()
     engine.dispose()
 
 
@@ -46,7 +46,7 @@ def get_current_user():
 
     if "user" in session:
         user = session["user"]
-        result = db_session.query(User).filter_by(user_id=user).first()
+        result = db.query(User).filter_by(user_id=user).first()
 
     return result
 
@@ -78,8 +78,8 @@ def index():
     return render_template("index.html", user=user)
 
 
-@app.route("/signup", methods=["GET", "POST"])
-def signup():
+@app.route("/register", methods=["GET", "POST"])
+def register():
     user = get_current_user()
 
     if user:
@@ -99,27 +99,27 @@ def signup():
 
         if not check_password_hash(hashed_password, request.form["repeat-password"]):
             error = "Password must be the same!"
-            return render_template('sign_up.html', error=error)
+            return render_template('register.html', error=error)
 
-        existing_user = db_session.query(User).filter_by(email=email).first()
+        existing_user = db.query(User).filter_by(email=email).first()
 
         if existing_user:
             error = "User with this email already existis!"
-            return render_template('sign_up.html', error=error)
+            return render_template('register.html', error=error)
 
         new_user = User(user_name=name, email=email, password=hashed_password)
-        db_session.add(new_user)
-        db_session.commit()
+        db.add(new_user)
+        db.commit()
 
         session["user"] = str(new_user.user_id)
 
         return redirect(url_for("my_tasks"))
 
-    return render_template("sign_up.html", user=user)
+    return render_template("register.html", user=user)
 
 
-@app.route("/signin", methods=["GET", "POST"])
-def signin():
+@app.route("/login", methods=["GET", "POST"])
+def login():
     user = get_current_user()
     error = None
 
@@ -130,7 +130,7 @@ def signin():
         email = request.form["email"]
         password = request.form["password"]
 
-        user_result = db_session.query(User).filter_by(email=email).first()
+        user_result = db.query(User).filter_by(email=email).first()
 
         if user_result:
             if check_password_hash(user_result.password, password):
@@ -141,11 +141,11 @@ def signin():
         else:
             error = "There is no such user. You have to register!"
 
-    return render_template("sign_in.html", user=user, error=error)
+    return render_template("login.html", user=user, error=error)
 
 
-@app.route("/signout")
-def signout():
+@app.route("/logout")
+def logout():
     session.clear()
     return redirect(url_for("index"))
 
@@ -157,7 +157,7 @@ def my_tasks():
     if not user:
         return redirect(url_for('signin'))
 
-    tasks = db_session.query(Task).filter_by(
+    tasks = db.query(Task).filter_by(
         user_id=user.user_id).filter_by(done=0, deleted=0).all()
 
     return render_template("my_tasks.html", user=user, tasks=tasks)
@@ -186,12 +186,12 @@ def new_task():
 
         new_task = Task(task_name=task, urgent=urgent, important=important)
         user.tasks.append(new_task)
-        db_session.commit()
+        db.commit()
 
         if comment.strip():
             new_comment = Comment(comment=comment)
             new_task.comments.append(new_comment)
-            db_session.commit()
+            db.commit()
 
         return redirect(url_for('my_tasks'))
 
@@ -205,8 +205,8 @@ def update(task_id):
     if not user:
         return redirect(url_for('signin'))
 
-    task = db_session.query(Task).filter_by(task_id=task_id).first()
-    comments = db_session.query(Comment).filter_by(task_id=task_id).all()
+    task = db.query(Task).filter_by(task_id=task_id).first()
+    comments = db.query(Comment).filter_by(task_id=task_id).all()
 
     if request.method == "POST":
         new_task = request.form["task"]
@@ -225,12 +225,12 @@ def update(task_id):
         task.task_name = new_task
         task.urgent = urgent
         task.important = important
-        db_session.commit()
+        db.commit()
 
         if new_comment.strip():
             add_comment = Comment(comment=new_comment)
             task.comments.append(add_comment)
-            db_session.commit()
+            db.commit()
 
         return redirect(url_for("my_tasks"))
 
@@ -244,7 +244,7 @@ def proceed_done(task_id):
     if not user:
         return redirect(url_for('signin'))
 
-    task = db_session.query(Task).filter_by(task_id=task_id).first()
+    task = db.query(Task).filter_by(task_id=task_id).first()
 
     if task.done:
         task.done = False
@@ -252,7 +252,7 @@ def proceed_done(task_id):
     else:
         task.done = True
         task.done_date = datetime.now()
-    db_session.commit()
+    db.commit()
 
     return redirect(url_for('my_tasks'))
 
@@ -264,10 +264,10 @@ def proceed_delete(task_id):
     if not user:
         return redirect(url_for('signin'))
 
-    task = db_session.query(Task).filter_by(task_id=task_id).first()
+    task = db.query(Task).filter_by(task_id=task_id).first()
 
     task.deleted = True
-    db_session.commit()
+    db.commit()
 
     return redirect(url_for('my_tasks'))
 
@@ -281,7 +281,7 @@ def archive():
 
     today = datetime.strftime(datetime.now(), '%Y-%m-%d')
 
-    query_tasks = db_session.query(Task).\
+    query_tasks = db.query(Task).\
         filter_by(user_id=user.user_id).\
         filter_by(done=1, deleted=0).\
         filter(func.DATE(Task.done_date) == today)
@@ -306,7 +306,7 @@ def show_archive(period):
     end_point = datetime.now() - timedelta(days=int(period))
     end_point = datetime.strftime(end_point, '%Y-%m-%d')
 
-    query_tasks = db_session.query(Task).\
+    query_tasks = db.query(Task).\
         filter_by(user_id=user.user_id).\
         filter_by(done=1, deleted=0).\
         filter(func.DATE(Task.done_date) <= today,
@@ -326,7 +326,7 @@ def show_period_archive(start_date, end_date):
     if not user:
         return redirect(url_for('signin'))
 
-    query_tasks = db_session.query(Task).\
+    query_tasks = db.query(Task).\
         filter_by(user_id=user.user_id).\
         filter_by(done=1, deleted=0).\
         filter(func.DATE(Task.done_date) >= start_date,
