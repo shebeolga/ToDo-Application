@@ -4,13 +4,13 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import func
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_mail import Mail, Message
 # from validate_email import validate_email
 import logging
-import os
 from datetime import datetime, timedelta
 from database import *
-# import mail
-from flask_mail import Mail, Message
+from config import DevConfig
+
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -25,21 +25,7 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 app = Flask(__name__)
-
-# db_uri = "sqlite:///database.db"
-app.config["DEBUG"] = True
-app.config["SECRET_KEY"] = os.urandom(24)
-# app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USERNAME"] = "shebeolga@gmail.com"
-app.config["MAIL_PASSWORD"] = "o1l1g1a1"
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USE_SSL"] = False
-app.config["MAIL_DEFAULT_SENDER"] = "support@myway.com"
-
+app.config.from_object(DevConfig)
 mail = Mail(app)
 
 engine = create_engine("sqlite:///database.db")
