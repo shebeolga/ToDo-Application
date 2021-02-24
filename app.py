@@ -91,7 +91,7 @@ def register():
 
         # if not validate_email(email):
         #     error = "Your email is not valid"
-        #     return render_template('sign_up.html', error=error)
+        #     return render_template('register.html', error=error)
 
         hashed_password = generate_password_hash(
             request.form["password"], method="sha256"
@@ -155,7 +155,7 @@ def my_tasks():
     user = get_current_user()
 
     if not user:
-        return redirect(url_for('signin'))
+        return redirect(url_for('login'))
 
     tasks = db.query(Task).filter_by(
         user_id=user.user_id).filter_by(done=0, deleted=0).all()
@@ -168,7 +168,7 @@ def new_task():
     user = get_current_user()
 
     if not user:
-        return redirect(url_for('signin'))
+        return redirect(url_for('login'))
 
     if request.method == "POST":
         task = request.form["task"]
@@ -203,7 +203,7 @@ def update(task_id):
     user = get_current_user()
 
     if not user:
-        return redirect(url_for('signin'))
+        return redirect(url_for('login'))
 
     task = db.query(Task).filter_by(task_id=task_id).first()
     comments = db.query(Comment).filter_by(task_id=task_id).all()
@@ -242,7 +242,7 @@ def proceed_done(task_id):
     user = get_current_user()
 
     if not user:
-        return redirect(url_for('signin'))
+        return redirect(url_for('login'))
 
     task = db.query(Task).filter_by(task_id=task_id).first()
 
@@ -262,7 +262,7 @@ def proceed_delete(task_id):
     user = get_current_user()
 
     if not user:
-        return redirect(url_for('signin'))
+        return redirect(url_for('login'))
 
     task = db.query(Task).filter_by(task_id=task_id).first()
 
@@ -277,7 +277,7 @@ def archive():
     user = get_current_user()
 
     if not user:
-        return redirect(url_for('signin'))
+        return redirect(url_for('login'))
 
     today = datetime.strftime(datetime.now(), '%Y-%m-%d')
 
@@ -300,7 +300,7 @@ def show_archive(period):
     user = get_current_user()
 
     if not user:
-        return redirect(url_for('signin'))
+        return redirect(url_for('login'))
 
     today = datetime.strftime(datetime.now(), '%Y-%m-%d')
     end_point = datetime.now() - timedelta(days=int(period))
@@ -324,7 +324,7 @@ def show_period_archive(start_date, end_date):
     user = get_current_user()
 
     if not user:
-        return redirect(url_for('signin'))
+        return redirect(url_for('login'))
 
     query_tasks = db.query(Task).\
         filter_by(user_id=user.user_id).\
@@ -339,9 +339,14 @@ def show_period_archive(start_date, end_date):
     return render_template("show_period_archive.html", user=user, tasks=tasks, counts=count_tasks)
 
 
-@app.route("/reports")
-def reports():
-    return "<h1>The page is under construction...</h1>"
+@app.route("/stats")
+def stats():
+    user = get_current_user()
+
+    if not user:
+        return redirect(url_for('login'))
+
+    return render_template("stats.html", user=user)
 
 
 if __name__ == "__main__":
