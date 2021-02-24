@@ -16,8 +16,8 @@
           <div class="menu-actions">
             <a class="menu-item" href="{{ url_for('index') }}">My ToDo App</a>
             {% if user %}
-            <a class="menu-item active-button" href="{{ url_for('my_tasks') }}">Active</a>
-            <a class="menu-item" href="{{ url_for('archive') }}">Archive</a>
+            <a class="menu-item {% if not task.done %} active-button {% endif %}" href="{{ url_for('my_tasks') }}">Active</a>
+            <a class="menu-item {% if task.done %} active-button {% endif %}" href="{{ url_for('archive') }}">Archive</a>
             <a class="menu-item" href="{{ url_for('reports') }}">Stats</a>
             {% endif %}
           </div>
@@ -70,7 +70,11 @@
                 <input class="button" type="submit" value="Update task">
                 <input class="button" type="button" value="{% if task.done %} Undone {% else %} Mark as done {% endif %}" onclick="Done();">
                 <input class="button" type="button" value="Delete" onclick="Delete();">
-                <input class="button" type="button" value="Cancel" onclick="Cancel();">
+                {% if not task.done %}  
+                <input class="button" type="button" value="Cancel" onclick="CancelActive();">
+                {% else %}
+                <input class="button" type="button" value="Cancel" onclick="CancelArchive();">
+                {% endif %}
               </div>
             </div>
           </form>
@@ -99,7 +103,11 @@
     window.location.href = "/proceed_delete/" + task_id;
   }
 
-  function Cancel() {
+  function CancelActive() {
     window.location.href = "/my_tasks";
+  }
+
+  function CancelArchive() {
+    window.location.href = "/archive";
   }
 </script>
