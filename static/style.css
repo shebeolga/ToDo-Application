@@ -360,6 +360,16 @@ textarea {
   padding-bottom: 10px;
 }
 
+.small-letters {
+  font-size: 12px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.small-letters-link {
+  color: var(--dark);
+}
+
 footer {
   background-color: var(--medium);
   padding: 20px;
