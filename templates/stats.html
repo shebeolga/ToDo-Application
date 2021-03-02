@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Sign up</title>
+    <link rel="shortcut icon" href="static\img\double-tick.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cabin">
+    <link rel="stylesheet" href="static\style.css">
+  </head>
+  <body>
+    <header>
+      <div class="layout-positioner">
+        <nav>
+          <div class="logo">
+            <a href="{{ url_for('index') }}"><img src="static\img\double-tick.png" alt="Logo"></a>
+          </div>
+          <div class="menu-actions">
+            <a class="menu-item" href="{{ url_for('index') }}">My ToDo App</a>
+            {% if user %}
+            <a class="menu-item" href="{{ url_for('my_tasks') }}">Active</a>
+            <a class="menu-item" href="{{ url_for('archive') }}">Archive</a>
+            <a class="menu-item active-button" href="{{ url_for('stats') }}">Stats</a>
+            {% endif %}
+          </div>
+          <div class="menu-log">
+            {% if not user %}
+            <a class="menu-item" href="{{ url_for('register') }}">Register</a>
+            <a class="menu-item" href="{{ url_for('login') }}">Log In</a>
+            {% endif %}
+            {% if user %}
+            <a class="menu-item" href="{{ url_for('logout') }}">Log Out</a>
+            {% endif %}
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+        <div class="layout-positioner">
+          <div class="content-form">
+            The page is under constraction
+          </div>
+        </div>
+    </main>
+
+    <footer>
+      <div class="layout-positioner">
+        <div class="copyright">
+          © Olga Shebeko, 2021
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<script type="text/javascript">
+  function Cancel() {
+    window.location.href = "/";
+  }
+</script>
