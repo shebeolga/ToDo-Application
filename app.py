@@ -135,10 +135,10 @@ def login():
                 session["user"] = str(user_result.user_id)
                 # mail.send_register_letter(
                 #     user_result.user_name, user_result.email)
-                msg = Message("This is a letter", recipients=[
-                    user_result.email])
-                msg.body = f"{user_result.user_name}, you logged in the MyWay App"
-                mail.send(msg)
+                # msg = Message("This is a letter", recipients=[
+                #     user_result.email])
+                # msg.body = f"{user_result.user_name}, you logged in the MyWay App"
+                # mail.send(msg)
                 return redirect(url_for("my_tasks"))
             else:
                 error = "The password is incorrect!"
@@ -146,6 +146,17 @@ def login():
             error = "There is no such user. You have to register!"
 
     return render_template("login.html", user=user, error=error)
+
+
+@app.route("/update_password")
+def update_password():
+    user = get_current_user()
+    error = None
+
+    # if user:
+    #     return redirect(url_for('my_tasks'))
+
+    return render_template("update_password.html", user=user)
 
 
 @app.route("/logout")
